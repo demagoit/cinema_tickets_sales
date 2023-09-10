@@ -3,6 +3,18 @@ import math
 
 SCREEN_WIDH = 600
 SCREEN_HEIGH = 600
+CINEMA_HEADER = SCREEN_HEIGH * 0.1
+
+SEAT_ROWS = 10
+SEATS_IN_ROW = 8
+
+cell_width = SCREEN_WIDH / SEATS_IN_ROW
+cell_height = (SCREEN_HEIGH - CINEMA_HEADER) / SEAT_ROWS
+
+if cell_height < cell_width:
+    SEAT_SIZE = cell_height * 0.8 / 2
+else:
+    SEAT_SIZE = cell_width * 0.8 / 2
 
 main_screen = turtle.Screen()
 
@@ -18,9 +30,11 @@ t = turtle.Turtle()
 t.hideturtle()
 
 def cinema_screen():
+    t.fillcolor('blue')
     t.up()
     t.goto(SCREEN_WIDH * 0.1, SCREEN_HEIGH * 0.94)
     t.down()
+    t.begin_fill()
     t.left(90)
     t.forward(SCREEN_HEIGH * 0.05)
     t.right(90)
@@ -36,21 +50,26 @@ def cinema_screen():
     t.down()
     t.circle(radius, -angle/2)
 
-    # t.up()
-    # t.goto(SCREEN_WIDH / 2, SCREEN_HEIGH * 0.98)
-    # # t.right(90)
-    # t.down()
-    # t.circle(-radius, angle/2)
+    t.up()
+    t.goto(SCREEN_WIDH / 2, SCREEN_HEIGH * 0.98)
+    t.setheading(180)
+    t.down()
+    t.circle(radius, angle/2)
+    t.end_fill()
 
-    print(radius, angle)
-
+    t.setheading(0)
+    
+    
 cinema_screen()
 
-# for i in range(10):
-#     t.circle(50)
-#     t.up()
-#     t.forward(60)
-#     t.down()
+# draw seats
+for row in range(SEAT_ROWS):
+    for seat in range(SEATS_IN_ROW):
+        t.up()
+        t.goto(cell_width * (1/2 + seat), cell_height * (0.1 + row))
+        t.down()
+        t.circle(SEAT_SIZE)
+
 
 main_screen.tracer(True)
 # turtle.mainloop()
